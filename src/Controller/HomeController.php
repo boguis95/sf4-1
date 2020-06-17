@@ -24,6 +24,9 @@ class HomeController extends AbstractController
             'pseudo' => 'John Doe',
             'liste' => [
                 'foo',
-                'bar',
+                'bar',]
+            ]);
     }
+}
+
 
