@@ -29,7 +29,7 @@ class ProductController extends AbstractController
         */
         public function edit($id)
         {
-            return $this->render('product/edit.html.twig',['id'=$id]);
+            return $this->render('product/edit.html.twig',['id'=>$id]);
         }
 
 
