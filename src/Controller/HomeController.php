@@ -1,5 +1,8 @@
 <?php
 namespace App\Controller;
+use App\Entity\Product;
+
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +22,7 @@ class HomeController extends AbstractController
     public function index()
     {
 # templates/        home.html.twig
-        return $this->render('home.html.twig', [
+        return $this->render('templates/home.html.twig', [
             'pseudo' => 'John Doe',
             'liste' => [
                 'foo',
@@ -30,18 +33,22 @@ class HomeController extends AbstractController
     }
 
     /**
-     * On place les paramètres dynamiques entre accolades
-     * URI valide:  /test/42
-     *
-     * @Route("/test/{id}", name="test")
+     * @Route("/test", name="test")
      */
-    public function test($id, Request $request, SessionInterface $session)
+    public function test(EntityManagerInterface $em)
     {
-        return $this->json([
-            'id' => $id,
-            'section' => $request->query->get('section', 'profil'),
-            'session' => $session->get('user'),
-        ]);
+        $product = new Product();
+        $product
+            ->setName("jean")
+            ->setDescription("joli jean")
+            ->setPrice(79.99)
+            ->setQuantity(50)
+            ;
+        dump($product);
+        $em->persist($product);
+        $em->flush($product);
+
+        dd($product);
     }
 }
 
